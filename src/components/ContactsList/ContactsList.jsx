@@ -1,9 +1,12 @@
 import { ContactsList, ContactItem, DeleteButton } from './ContactsList.styled'
 import { AiOutlineUser } from 'react-icons/ai'
 import { FiX } from 'react-icons/fi'
+import { useEffect } from 'react'
+import { fetchContactsList } from '../../redux/operation'
 
 import { connect, useSelector, useDispatch } from 'react-redux'
-import action from '../../redux/action'
+// import action from '../../redux/action'
+import { action } from '../../redux'
 import { getFilterContacts } from '../../redux/selector'
 
 export default function ContactsListSection() {
@@ -12,6 +15,10 @@ export default function ContactsListSection() {
   const dispatch = useDispatch()
 
   const onDelete = (id) => dispatch(action.deleteContact(id))
+
+  useEffect(() => {
+    dispatch(fetchContactsList())
+  }, [dispatch])
 
   return (
     <ContactsList>

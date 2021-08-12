@@ -2,7 +2,7 @@ import types from "./types";
 import shortid from "shortid";
 
 //--------------------------------redux-toolkit
-import { createAction, nanoid } from "@reduxjs/toolkit";
+import { createAction } from "@reduxjs/toolkit";
 
 const addContact = createAction("AddContact", (name, number) => {
   return {
@@ -23,7 +23,14 @@ const fetchContactsSuccess = createAction("FetchContactsSuccess");
 
 const fetchContactsError = createAction("FetchContactsError");
 
-export default { addContact, deleteContact, changeFilter };
+export default {
+  addContact,
+  deleteContact,
+  changeFilter,
+  fetchContactsRequest,
+  fetchContactsSuccess,
+  fetchContactsError,
+};
 
 //----------------------------------redux
 
