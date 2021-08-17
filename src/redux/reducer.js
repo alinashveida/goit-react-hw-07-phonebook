@@ -3,7 +3,7 @@
 
 import { createReducer, combineReducers } from "@reduxjs/toolkit";
 import action from "./action";
-import { fetchContactsList } from "redux/operation";
+import { fetchContactsList, addContact, deleteContact } from "redux/operation";
 import { createSlice } from "@reduxjs/toolkit";
 
 //--------------------------------redux-toolkit
@@ -23,9 +23,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const items = createReducer([], {
   [fetchContactsList.fulfilled]: (_, action) => action.payload,
-  [action.addContact]: (state, action) => [action.payload, ...state],
-  [action.deleteContact]: (state, action) =>
-    state.filter((contact) => contact.id !== action.payload),
+  //[action.addContact]: (state, action) => [action.payload, ...state],
+  //[action.deleteContact]: (state, action) =>
+  //  state.filter((contact) => contact.id !== action.payload),
+
+  [addContact.fulfilled]: (state, action) => [action.payload, ...state],
+  [deleteContact.fulfilled]: (state, action) => {
+    state = state.filter((contact) => contact.id !== action.payload);
+  },
 });
 
 const filter = createReducer("", {
@@ -54,38 +59,36 @@ const error = createReducer(null, {
   [fetchContactsList.pending]: () => null,
 });
 
-const initialState = { value: 0 };
+// const contactsSlice = createSlice({
+//   name: "contacts",
+//   initialState: { items: [], filter: "", isLoading: false, error: null },
+//   extraReducers: {
+//     [fetchContactsList.fulfilled]: (state, action) => {
+//       return {
+//         ...state,
+//         items: action.payload,
+//       };
+//     },
+//     [action.addContact]: (state, action) => {
+//       return {
+//         ...state,
+//         items: [action.payload, ...state],
+//       };
+//     },
+//     [action.deleteContact]: (state, action) => {
+//       return {
+//         ...state,
+//         items: items.filter((contact) => contact.id !== action.payload),
+//       };
+//     },
 
-const contactsSlice = createSlice({
-  name: "contacts",
-  initialState: { items: [], filter: "", isLoading: false, error: null },
-  extraReducers: {
-    [fetchContactsList.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        items: action.payload,
-      };
-    },
-    [action.addContact]: (state, action) => {
-      return {
-        ...state,
-        items: [action.payload, ...state],
-      };
-    },
-    [action.deleteContact]: (state, action) => {
-      return {
-        ...state,
-        items: items.filter((contact) => contact.id !== action.payload),
-      };
-    },
-
-    // [action.changeFilter]: (state, { payload }) => {
-    //   return{
-    //     ...state,
-    //     filter: payload
-    //   }
-  },
-});
+//     // [action.changeFilter]: (state, { payload }) => {
+//     //   return{
+//     //     ...state,
+//     //     filter: payload
+//     //   }
+//   },
+// });
 
 export default combineReducers({
   items,

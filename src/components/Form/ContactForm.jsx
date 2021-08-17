@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 import { connect, useSelector, useDispatch } from 'react-redux'
 import action from '../../redux/action'
 import { getContacts } from '../../redux/selector'
+import { addContact } from 'redux/operation'
 
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -18,7 +19,9 @@ export default function ContactForm() {
 
   const dispatch = useDispatch()
 
-  const onSubmit = (name, number) => dispatch(action.addContact(name, number))
+  //const onSubmit = (name, number) => dispatch(action.addContact(name, number))
+
+  const onSubmit = ({ name, number }) => dispatch(addContact({ name, number }))
 
   const onChangeInput = (event) => {
     const { value, name } = event.target
@@ -49,7 +52,15 @@ export default function ContactForm() {
       return
     }
 
-    onSubmit(name, number)
+    onSubmit({ name, number })
+
+    // dispatch(
+    //   addContact({
+    //     //id: uuidv4(),
+    //     name,
+    //     number,
+    //   }),
+    // )
 
     reset()
   }

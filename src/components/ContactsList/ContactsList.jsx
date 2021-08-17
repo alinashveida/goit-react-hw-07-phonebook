@@ -9,12 +9,15 @@ import { connect, useSelector, useDispatch } from 'react-redux'
 import { action } from '../../redux'
 import { getFilterContacts } from '../../redux/selector'
 
+import { deleteContact } from '../../redux/operation'
+
 export default function ContactsListSection() {
   const contacts = useSelector(getFilterContacts)
 
   const dispatch = useDispatch()
 
-  const onDelete = (id) => dispatch(action.deleteContact(id))
+  //const onDelete = (id) => dispatch(action.deleteContact(id))
+  const onDelete = (id) => dispatch(deleteContact(id), console.log(id))
 
   useEffect(() => {
     dispatch(fetchContactsList())
